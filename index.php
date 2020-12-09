@@ -1,36 +1,73 @@
-<!DOCTYPE html>
-<html>
-    <head>
-     <title>Awsome PXL DevOps App!</title>
-     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-     <link rel="stylesheet" href="assets/css/style.css">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">PXL DevOps App</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="index.php">Home</a>
-                    <a class="nav-item nav-link" href="add.php">Add employee</a>
-                </div>
-            </div>
-        </nav>
-        
+<!DOCTYPE html>                                                                                                         
+<html>                                                                                                                  
+    <head>                                                                                                              
+     <title>Awsome PXL DevOps App!</title>                                                                              
+     <link rel="stylesheet" href="assets/css/bootstrap.min.css">                                                        
+     <link rel="stylesheet" href="assets/css/style.css">                                                                
+    </head>                                                                                                             
+    <body>                                                                                                              
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">                                                     
+            <a class="navbar-brand" href="#">PXL DevOps App</a>                                                         
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-c
+ontrols="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">                                      
+                <span class="navbar-toggler-icon"></span>                                                               
+            </button>                                                                                                   
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">                                              
+                <div class="navbar-nav">                                                                                
+                    <a class="nav-item nav-link active" href="index.php">Home</a>                                       
+                    <a class="nav-item nav-link" href="add.php">Add employee</a>                                        
+                </div>                                                                                                  
+            </div>                                                                                                      
+        </nav>                                                                                                          
+                                                                                                                        
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <?php
+ <div class="carousel-inner">
+        <?php
+         require './aws.phar';
+
+          use Aws\S3\S3Client;
+          use Aws\Exception\AwsException;
+
+          $bucket = 'pxl-cloud-webserver-bucket';
+          $sdk = new Aws\Sdk([
+                'version' => 'latest',
+                'region' => 'us-east-1'
+           ]);
+        $aws_key
+        $aws_secret
+        $aws_token
+        $s3 = new S3Client([
+              'version' => 'latest',
+              'region'  => 'us-east-1',
+              'credentials' => [
+                      'key' => $aws_key,
+                      'secret' => $aws_secret,
+                      'token' => $aws_token,
+              ],
+        ]);
+          $images = array();
+         try {
+         $results = $s3->getPaginator('ListObjects', [
+         'Bucket' => $bucket
+         ]);
+
+         foreach ($results as $result) {
+                 foreach ($result['Contents'] as $object){
+                        array_push($images, $object['Key']);
+                   }
+                }
+        } catch (S3Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
+                console.log($e->getMessage());
+        }
         // scan the images directory for images to use in the carousel
         // first 2 keys in the returned array are . and ..   We will need to filter those!
-        $images = scandir('assets/images');
         foreach($images as $key => $image){
             if (!in_array($image,array(".",".."))){
                 // First item needs to get the active css class. Otherwise the carousel will not show
                 echo ($key == 2) ? '<div class="carousel-item active">' : '<div class="carousel-item">';
-                echo "<img class='d-block w-100' src='assets/images/$image'/></div>";
-            }     
+                echo "<img class='d-block w-100' src='Path'/></div>";
+            }
         }
     ?>
   </div>
@@ -72,3 +109,4 @@
         <script src="assets/js/bootstrap.min.js" ></script>
     </body>
 </html>
+                                        
