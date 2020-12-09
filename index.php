@@ -33,9 +33,6 @@ ontrols="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation
                 'version' => 'latest',
                 'region' => 'us-east-1'
            ]);
-        $aws_key
-        $aws_secret
-        $aws_token
         $s3 = new S3Client([
               'version' => 'latest',
               'region'  => 'us-east-1',
