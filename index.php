@@ -28,7 +28,7 @@ ontrols="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation
           use Aws\S3\S3Client;
           use Aws\Exception\AwsException;
 
-          $bucket = 'pxl-cloud-webserver-bucket';
+          $bucket = '$changeBucket';
           $sdk = new Aws\Sdk([
                 'version' => 'latest',
                 'region' => 'us-east-1'
